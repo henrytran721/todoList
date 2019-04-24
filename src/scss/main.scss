@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300');
+
+$colors: (
+  primary: #ca2100,
+  white: #fff,
+  gray: #cfcfc4,
+);
+
+$borders: 5px;
+$padding: 60px;
+
+@function color($color) {
+  @return map-get($colors, $color);
+}
+@mixin hover {
+  &:hover {
+    background: rgba(0,0,0,0.2);
+  }
+}
+@mixin navButtons {
+  text-align: center;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: white;
+}
+@mixin navIcons {
+  border-radius: $borders;
+  padding: 0 5px;
+  @include hover;
+  font-weight: lighter;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.topBar {
+  background-color: color(primary);
+  height: 50px;
+  width: 100%;
+
+  main {
+    display: grid;
+    grid-template-columns: 35px 50px 50px;
+    justify-content: space-around;
+    margin: 0 25%;
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      background-color: color(white);
+      margin-top: 10px;
+      border-radius: $borders;
+      text-align: center;
+      @include hover;
+
+      p {
+        margin: 0;
+        padding: 5px 0;
+        color: color(primary);
+      }
+    }
+
+    .addTask {
+      @include navButtons;
+      .addText {
+        @include navIcons;
+      }
+    }
+    .completedTask {
+      @include navButtons;
+      font-size: 1.5em;
+      .completion {
+        @include navIcons;
+      }
+    }
+}
+}
+
+.mainBody {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 30% auto;
+  height: 94.8%;
+
+  section#menu {
+    background-color: lighten(color(gray), 10%);
+    text-align: right;
+    padding-right: 30px;
+    border-right: 1px solid darken(color(gray), 10%);
+
+  ul {
+    list-style: none;
+    font-family: 'Roboto Condensed', sans-serif;
+
+    .addProject {
+    display: grid;
+    grid-template-columns: 50% auto;
+    width: 50%;
+    float: right;
+    border-bottom: 1px solid darken(color(gray), 10%);
+    span {
+      align-self: center;
+      font-size: 1.5em;
+    }
+    }
+  }
+  }
+
+  section#todaySection {
+    color: red;
+    h1 {
+      padding: 20px;
+    }
+  }
+}

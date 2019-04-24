@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300');
+
+$colors: (
+  primary: #ca2100,
+  white: #fff,
+  gray: #cfcfc4,
+  green: #228b22
+);
+
+$borders: 5px;
+$padding: 60px;
+$input-width: 200px;
+$input-height: 20px;
+$completed: 300px;
+$font-size: 1em;
+@function color($color) {
+  @return map-get($colors, $color);
+}
+@mixin hover {
+  &:hover {
+    background: rgba(0,0,0,0.2);
+  }
+}
+@mixin navButtons {
+  text-align: center;
+  padding: 5px 0;
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: white;
+}
+@mixin navIcons {
+  border-radius: $borders;
+  padding: 0 5px;
+  @include hover;
+  font-weight: lighter;
+}
+
+@mixin mobile {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin bars {
+  width: 20px;
+  height: 5px;
+  background-color: white;
+  margin-bottom: 2px;
+}
+
+body, html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.topBar {
+  background-color: color(primary);
+  height: 50px;
+  width: 100%;
+
+  main {
+    display: grid;
+    grid-template-columns: 35px 50px 50px;
+    justify-content: space-around;
+    margin: 0 25%;
+    @include mobile {
+      display: grid;
+      grid-template-columns: 50px 35px 50px 50px;
+      justify-content: space-around;
+      margin: 0 15%;
+    }
+    .menuBar {
+      padding: 15px;
+      display: none;
+      @include hover;
+      @include mobile {
+        display: block;
+      }
+    }
+    .bar1, .bar2, .bar3 {
+      @include bars;
+    }
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      background-color: color(white);
+      margin-top: 10px;
+      border-radius: $borders;
+      text-align: center;
+      @include hover;
+
+      p {
+        margin: 0;
+        padding: 5px 0;
+        color: color(primary);
+      }
+    }
+
+    .addTask {
+      @include navButtons;
+      .addText {
+        @include navIcons;
+        position: absolute;
+        top: 5px;
+      }
+    }
+    .completedTask {
+      @include navButtons;
+      font-size: 1.5em;
+      .completion {
+        @include navIcons;
+      }
+    }
+}
+}
+
+.mainBody {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 30% auto;
+  height: 94.8%;
+
+  section#menu {
+    background-color: lighten(color(gray), 10%);
+    text-align: right;
+    padding-right: 30px;
+    border-right: 1px solid darken(color(gray), 10%);
+    @include mobile {
+      display: none;
+      padding: 0;
+    }
+  ul {
+    list-style: none;
+    font-family: 'Roboto Condensed', sans-serif;
+
+    li {
+      @include mobile {
+        font-size: 0.8em;
+      }
+    }
+    .addProject {
+    display: grid;
+    grid-template-columns: 50% auto;
+    width: 50%;
+    float: right;
+    border-bottom: 1px solid darken(color(gray), 10%);
+    @include mobile {
+      width: 100px;
+      margin-left: 10px;
+    }
+    span {
+      align-self: center;
+      font-size: 1.5em;
+      @include mobile {
+        font-size: 0.8em;
+      }
+    }
+    }
+  }
+  }
+
+  .todaySection {
+    header {
+      display: grid;
+      grid-template-columns: 100px 100px;
+      grid-template-rows: 100px 50px;
+      text-align: center;
+      align-items: center;
+      font-family: "Roboto Condensed", sans-serif;
+      p {
+        padding-top: 5px;
+      }
+    }
+    h1 {
+      padding: 0 20px;
+      }
+    .addTaskText, .plusText {
+      align-self: flex-start;
+      margin: 0;
+    }
+    .plusText {
+      cursor: pointer;
+      color: color(primary);
+      font-size: 1.2em;
+      width: 30px;
+      height: 30px;
+      justify-self: center;
+      padding-top: 5px;
+      &:hover {
+        background-color: color(primary);
+        color: white;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.inputFormDiv {
+  visibility: hidden;
+  @include mobile {
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+    grid-template-areas:
+    "input
+    button"
+  }
+  input {
+    width: $input-width;
+    height: $input-height + 15px;
+    margin: 0 $input-height + 20px;
+    font-size: $font-size;
+    @include mobile {
+      grid-area: input;
+    }
+  }
+  button {
+    background: none;
+    border: none;
+    color: white;
+    background-color: color(primary);
+    padding: $padding / 4;
+    border-radius: $borders;
+    font-family: inherit;
+    @include mobile {
+      grid-area: button;
+    }
+  }
+}
+
+.taskDiv {
+  display: grid;
+  grid-template-columns: 200px 150px 30px 50px 50px;
+  grid-gap: 30px;
+  padding: 0 50px;
+  @include mobile {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    padding: 0;
+    grid-gap: 0;
+    margin-left: 20%;
+    grid-template-areas:
+    "taskName date button completion delete"
+  }
+
+  h1 {
+    @include mobile {
+      grid-area: taskName;
+  }
+  padding: 15px;
+  }
+
+  button {
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    border: 2px solid color(primary);
+    border-radius: 50%;
+    align-self: center;
+    &:hover {
+      background-color: color(primary);
+    }
+    @include mobile {
+      grid-area: button;
+  }
+  }
+
+  h3{
+    text-align: center;
+    padding: 10px;
+    font-size: 1em;
+    color: color(primary);
+  }
+
+  p {
+    padding: 15px 0;
+    font-size: 0.8em;
+    color: color(primary);
+    visibility: hidden;
+    @include mobile {
+      grid-area: completion;
+  }
+  }
+
+  .deleteBtn {
+    cursor: pointer;
+    @include mobile {
+      grid-area: delete;
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+  }
+  }
+}
+
+.completedDiv {
+  height: $completed;
+  width: $completed;
+  padding: $padding / 3;
+  display: none;
+  z-index: 10;
+  position: relative;
+  background-color: color(white);
+  border: 2px solid #000;
+  border-radius: $borders + 10;
+
+  .completedInput {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+  }
+
+  h2 {
+    color: color(primary);
+    text-decoration: underline;
+    text-decoration-color: color(primary);
+    text-align: center;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1.5em;
+  }
+
+  h1 {
+    color: color(green);
+
+  }
+}
